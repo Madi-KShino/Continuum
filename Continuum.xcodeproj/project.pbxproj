@@ -15,6 +15,9 @@
 		53D0C50322D532D400D42E5A /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C50222D532D400D42E5A /* PostDetailTableViewController.swift */; };
 		53D0C50522D5336000D42E5A /* AddPostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C50422D5336000D42E5A /* AddPostTableViewController.swift */; };
 		53D0C50722D533DC00D42E5A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C50622D533DC00D42E5A /* Post.swift */; };
+		53D0C50922D537F900D42E5A /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C50822D537F900D42E5A /* PostController.swift */; };
+		53D0C50B22D53ED400D42E5A /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C50A22D53ED400D42E5A /* PostTableViewCell.swift */; };
+		53D0C50E22D5512900D42E5A /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C50D22D5512900D42E5A /* DateFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		53D0C50222D532D400D42E5A /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		53D0C50422D5336000D42E5A /* AddPostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostTableViewController.swift; sourceTree = "<group>"; };
 		53D0C50622D533DC00D42E5A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		53D0C50822D537F900D42E5A /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
+		53D0C50A22D53ED400D42E5A /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		53D0C50D22D5512900D42E5A /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,7 @@
 				53D0C4FF22D5325400D42E5A /* Model */,
 				53D0C4FE22D5324000D42E5A /* Model Controllers */,
 				53D0C4FD22D5323100D42E5A /* View Controllers */,
+				53D0C50C22D550DD00D42E5A /* Helpers+Extensions */,
 				53D0C4FC22D51F2500D42E5A /* Resources */,
 			);
 			path = Continuum;
@@ -86,6 +93,7 @@
 				53D0C50022D5327C00D42E5A /* PostListTableViewController.swift */,
 				53D0C50222D532D400D42E5A /* PostDetailTableViewController.swift */,
 				53D0C50422D5336000D42E5A /* AddPostTableViewController.swift */,
+				53D0C50A22D53ED400D42E5A /* PostTableViewCell.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -93,6 +101,7 @@
 		53D0C4FE22D5324000D42E5A /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				53D0C50822D537F900D42E5A /* PostController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -103,6 +112,14 @@
 				53D0C50622D533DC00D42E5A /* Post.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		53D0C50C22D550DD00D42E5A /* Helpers+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				53D0C50D22D5512900D42E5A /* DateFormatter.swift */,
+			);
+			path = "Helpers+Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,11 +193,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53D0C50E22D5512900D42E5A /* DateFormatter.swift in Sources */,
+				53D0C50B22D53ED400D42E5A /* PostTableViewCell.swift in Sources */,
 				53D0C4EB22D51F1700D42E5A /* AppDelegate.swift in Sources */,
 				53D0C50122D5327C00D42E5A /* PostListTableViewController.swift in Sources */,
 				53D0C50522D5336000D42E5A /* AddPostTableViewController.swift in Sources */,
 				53D0C50322D532D400D42E5A /* PostDetailTableViewController.swift in Sources */,
 				53D0C50722D533DC00D42E5A /* Post.swift in Sources */,
+				53D0C50922D537F900D42E5A /* PostController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +347,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Continuum/Info.plist;
+				DEVELOPMENT_TEAM = 8MJ3MC3A9A;
+				INFOPLIST_FILE = "$(SRCROOT)/Continuum/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,7 +365,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Continuum/Info.plist;
+				DEVELOPMENT_TEAM = 8MJ3MC3A9A;
+				INFOPLIST_FILE = "$(SRCROOT)/Continuum/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
