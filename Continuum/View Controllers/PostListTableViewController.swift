@@ -14,6 +14,11 @@ class PostListTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     //TABLE VIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PostController.sharedInstance.posts.count
@@ -23,7 +28,7 @@ class PostListTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "postTableViewCell", for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
         
         cell.post = PostController.sharedInstance.posts[indexPath.row]
-        
+
         return cell
     }
     

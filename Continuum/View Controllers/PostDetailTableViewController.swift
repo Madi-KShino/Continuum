@@ -76,10 +76,10 @@ extension PostDetailTableViewController: UITextFieldDelegate {
                 else {return}
             if commentText != "" {
                 PostController.sharedInstance.addCommentWith(text: commentText, post: post, completion: { (comment) in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
                 })
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
         let cancelAction = UIAlertAction(title:"Cancel", style: .destructive)
