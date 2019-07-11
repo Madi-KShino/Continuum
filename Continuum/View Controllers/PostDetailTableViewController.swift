@@ -21,6 +21,7 @@ class PostDetailTableViewController: UITableViewController {
     
     //OUTLET
     @IBOutlet weak var postImageView: UIImageView!
+    @IBOutlet weak var photoCaptionlabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,11 @@ class PostDetailTableViewController: UITableViewController {
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
+        guard let postPhoto = postLandingPad?.photo,
+        let caption = postLandingPad?.caption
+        else { return }
+        let shareAlert = UIActivityViewController(activityItems: [postPhoto, caption], applicationActivities: nil)
+        present(shareAlert, animated: true, completion: nil)
     }
     
     @IBAction func followButtonTapped(_ sender: Any) {
@@ -39,10 +45,9 @@ class PostDetailTableViewController: UITableViewController {
     
     func updateViews() {
         postImageView.image = postLandingPad?.photo
+        photoCaptionlabel.text = postLandingPad?.caption
         self.tableView.reloadData()
-        
     }
-    
     
     //TABLE VIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,7 +80,7 @@ extension PostDetailTableViewController: UITextFieldDelegate {
                 let post = self.postLandingPad
                 else {return}
             if commentText != "" {
-                PostController.sharedInstance.addCommentWith(text: commentText, post: post, completion: { (comment) in
+                PostController.sharedInstance.createCommentWith(text: commentText, post: post, completion: { (comment) in
                 })
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

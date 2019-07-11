@@ -15,6 +15,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var postCaptionLabel: UILabel!
     @IBOutlet weak var postCommentLabel: UILabel!
     @IBOutlet weak var postCommentCountLabel: UILabel!
+    @IBOutlet weak var postTimeLabel: UILabel!
     
     //PROPERTIES
     var post: Post? {
@@ -31,5 +32,6 @@ class PostTableViewCell: UITableViewCell {
         postImageView.image = post.photo
         postCaptionLabel.text = post.caption
         postCommentCountLabel.text = "\(post.comments.count)"
+        postTimeLabel.text = post.timeStamp.formatDate()
     }
 }
