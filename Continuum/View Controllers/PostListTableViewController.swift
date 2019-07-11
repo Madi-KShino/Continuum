@@ -42,6 +42,7 @@ class PostListTableViewController: UITableViewController {
         stackView.frame.size.height = max(label.frame.height, secondLabel.frame.height)
         
         navigationItem.titleView = stackView
+        sync(completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

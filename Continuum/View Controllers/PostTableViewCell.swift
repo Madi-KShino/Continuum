@@ -31,7 +31,7 @@ class PostTableViewCell: UITableViewCell {
         guard let post = post else { return }
         postImageView.image = post.photo
         postCaptionLabel.text = post.caption
-        postCommentCountLabel.text = "\(post.comments.count)"
+        postCommentCountLabel.text = "\(post.commentCount)"
         postTimeLabel.text = post.timeStamp.formatDate()
     }
 }

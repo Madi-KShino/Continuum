@@ -16,6 +16,7 @@ class Post {
     var caption: String
     let timeStamp: Date
     var comments: [Comment]
+    var commentCount: Int
     var photoData: Data?
     var photo: UIImage? {
         get {
@@ -44,31 +45,27 @@ class Post {
     }
     
     //DESIGNATED/MEMBERWISE INIT
-    init(caption: String, timeStamp: Date = Date(), comments: [Comment] = [], photo: UIImage, cloudKitRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
+    init(caption: String, timeStamp: Date = Date(), comments: [Comment] = [], commentCount: Int = 0, photo: UIImage, cloudKitRecordID: CKRecord.ID = CKRecord.ID(recordName: UUID().uuidString)) {
         self.caption = caption
         self.timeStamp = timeStamp
         self.comments = comments
+        self.commentCount = commentCount
         self.cloudKitRecordID = cloudKitRecordID
         self.photo = photo
     }
     
     //INIT POST FROM RECORD
-    init?(record: CKRecord) {
+    convenience init?(record: CKRecord) {
         guard let caption = record[PostConstants.captionKey] as? String,
         let timeStamp = record[PostConstants.timeStampKey] as? Date,
-        let comments = record[PostConstants.commentsKey] as? [Comment],
+        let commentCount = record[PostConstants.commentCountKey] as? Int,
         let imageAsset = record[PostConstants.photoKey] as? CKAsset
             else { return nil }
-        self.caption = caption
-        self.timeStamp = timeStamp
-        self.comments = comments
-        self.cloudKitRecordID = record.recordID
         
-        do {
-            try self.photoData = Data(contentsOf: imageAsset.fileURL!)
-        } catch {
-            print("error")
-        }
+        guard let photoData = try? Data(contentsOf: imageAsset.fileURL!) else { return nil }
+        guard let photo = UIImage(data: photoData) else { return nil }
+        
+        self.init(caption: caption, timeStamp: timeStamp, comments: [], commentCount: commentCount, photo: photo, cloudKitRecordID: record.recordID)
     }
 }
 
@@ -95,6 +92,7 @@ extension CKRecord {
         self.setValue(post.caption, forKey: PostConstants.captionKey)
         self.setValue(post.timeStamp, forKey: PostConstants.timeStampKey)
         self.setValue(post.comments, forKey: PostConstants.commentsKey)
+        self.setValue(post.commentCount, forKey: PostConstants.commentCountKey)
         self.setValue(post.imageAsset, forKey: PostConstants.photoKey)
     }
 }
@@ -105,5 +103,6 @@ struct PostConstants {
     fileprivate static let captionKey = "caption"
     fileprivate static let timeStampKey = "timeStamp"
     fileprivate static let commentsKey = "comments"
+    fileprivate static let commentCountKey = "commentCount"
     fileprivate static let photoKey = "photo"
 }
