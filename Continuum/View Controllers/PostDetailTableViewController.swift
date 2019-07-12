@@ -13,18 +13,26 @@ class PostDetailTableViewController: UITableViewController {
 
     var postLandingPad: Post? {
         didSet {
-            DispatchQueue.main.async {
-                self.updateViews()
-            }
+            loadViewIfNeeded()
+            self.tableView.reloadData()
         }
     }
     
     //OUTLET
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var photoCaptionlabel: UILabel!
+    @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var buttonStackView: UIStackView!
     
+    //LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let post = postLandingPad else { return }
+        PostController.sharedInstance.fetchComments(forPost: post) { (_) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     //ACTIONS
@@ -41,14 +49,35 @@ class PostDetailTableViewController: UITableViewController {
     }
     
     @IBAction func followButtonTapped(_ sender: Any) {
+        guard let post = postLandingPad else { return }
+        PostController.sharedInstance.toggleSubscription(post: post) { (success, error) in
+            if let error = error {
+                print("Error in \(#function): \(error.localizedDescription) /n---/n \(error)")
+                return
+            }
+            self.updateFollowPostButton()
+        }
     }
     
-    func updateViews() {
-        postImageView.image = postLandingPad?.photo
-        photoCaptionlabel.text = postLandingPad?.caption
+    @objc func updateViews() {
+        guard let post = postLandingPad else { return }
+        postImageView.image = post.photo
+        photoCaptionlabel.text = post.caption
+        updateFollowPostButton()
         self.tableView.reloadData()
     }
     
+    func updateFollowPostButton() {
+        guard let post = postLandingPad else { return }
+        PostController.sharedInstance.checkPostSubscription(post: post) { (found) in
+            DispatchQueue.main.async {
+                let followButtonText = found ? "Unfollow" : "Follow"
+                self.followButton.setTitle(followButtonText, for: .normal)
+                self.buttonStackView.layoutIfNeeded()
+            }
+        }
+    }
+
     //TABLE VIEW
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let post = postLandingPad else { return 0 }

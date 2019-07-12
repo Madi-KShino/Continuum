@@ -48,7 +48,9 @@ class PostListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.resultsArray = PostController.sharedInstance.posts
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     //TABLE VIEW

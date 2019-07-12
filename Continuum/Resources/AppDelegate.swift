@@ -8,17 +8,26 @@
 
 import UIKit
 import CloudKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         checkAccountStatus { (success) in
             let checkedUserInfo = success ? "Successfully retrieved a logged in user!" : "Failed to retrieve logged in user"
             print(checkedUserInfo)
         }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
+            if let error = error {
+                print("Error in \(#function): \(error.localizedDescription) /n---/n \(error)")
+                return
+            }
+            success ? print("Authorized to send push notifications") : print("Denied")
+        }
+        application.registerForRemoteNotifications()
         return true
     }
     

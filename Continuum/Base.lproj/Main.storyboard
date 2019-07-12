@@ -336,6 +336,8 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="buttonStackView" destination="EVA-yN-A0r" id="1sN-jO-rgF"/>
+                        <outlet property="followButton" destination="lL8-yG-yaq" id="b6g-NV-py7"/>
                         <outlet property="photoCaptionlabel" destination="Ax6-T1-H1b" id="SRD-5z-yqT"/>
                         <outlet property="postImageView" destination="RE8-km-kFO" id="Qfm-MZ-hR5"/>
                     </connections>
