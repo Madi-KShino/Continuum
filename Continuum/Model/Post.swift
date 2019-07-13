@@ -91,7 +91,6 @@ extension CKRecord {
         self.init(recordType: PostConstants.typeKey, recordID: post.cloudKitRecordID)
         self.setValue(post.caption, forKey: PostConstants.captionKey)
         self.setValue(post.timeStamp, forKey: PostConstants.timeStampKey)
-//        self.setValue(post.comments, forKey: PostConstants.commentsKey)
         self.setValue(post.commentCount, forKey: PostConstants.commentCountKey)
         self.setValue(post.imageAsset, forKey: PostConstants.photoKey)
     }
@@ -102,7 +101,6 @@ struct PostConstants {
     static let typeKey = "Post"
     fileprivate static let captionKey = "caption"
     fileprivate static let timeStampKey = "timeStamp"
-//    fileprivate static let commentsKey = "comments"
     fileprivate static let commentCountKey = "commentCount"
     fileprivate static let photoKey = "photo"
 }

@@ -131,10 +131,10 @@ class PostController {
     
     func subscribeToNewComments(post: Post, completion: ((Bool, Error?) -> Void)?) {
         let postRecordID = post.cloudKitRecordID
-        let predicate = NSPredicate(format: "%K = %@", CommentConstants.commentTypeKey, postRecordID)
+        let predicate = NSPredicate(format: "%K = %@", CommentConstants.postReferenceKey, postRecordID)
         let subsciption = CKQuerySubscription(recordType: CommentConstants.commentTypeKey, predicate: predicate, subscriptionID: post.cloudKitRecordID.recordName, options: CKQuerySubscription.Options.firesOnRecordCreation)
         let notification = CKSubscription.NotificationInfo()
-        notification.alertBody = "Check out the new comments to a post you followed!"
+        notification.alertBody = "Check out the new comment to a post you followed!"
         notification.shouldSendContentAvailable = true
         notification.desiredKeys = nil
         subsciption.notificationInfo = notification
@@ -164,39 +164,47 @@ class PostController {
     
     func checkPostSubscription(post: Post, completion: ((Bool) -> ())?) {
         let subscriptionID = post.cloudKitRecordID.recordName
-        publicDatabase.fetch(withSubscriptionID: subscriptionID) { (_, error) in
+        publicDatabase.fetch(withSubscriptionID: subscriptionID) { (subscription, error) in
             if let error = error {
                 print("Error in \(#function): \(error.localizedDescription) /n---/n \(error)")
                 completion?(false)
                 return
-            } else {
+            }
+            if subscription != nil{
                 completion?(true)
+            } else {
+                completion?(false)
             }
         }
     }
     
     func toggleSubscription(post: Post, completion: ((Bool, Error?) -> ())?) {
-        checkPostSubscription(post: post) { (success) in
-            if success {
-                print("Removed Subscription to post with caption \(post.caption)")
-                completion?(true, nil)
+        checkPostSubscription(post: post) { (isSubscribed) in
+            if isSubscribed {
+                self.removeCommentSubscriptions(post: post, completion: { (success) in
+                    if success {
+                        print("Removed Subscription to post with caption \(post.caption)")
+                        completion?(true, nil)
+                    } else {
+                        print("Error while removing subscription to post with caption \(post.caption)")
+                        completion?(false, nil)
+                    }
+                })
             } else {
-                print("Error while removing subscription to post with caption \(post.caption)")
-                completion?(false, nil)
-            }
-        }
-        self.subscribeToNewComments(post: post) { (success, error) in
-            if let error = error {
-                print("Error in \(#function): \(error.localizedDescription) /n---/n \(error)")
-                completion?(false, error)
-                return
-            }
-            if success {
-                print("Successfully subscribed to the post with captio \(post.caption)")
-                completion?(true, nil)
-            } else {
-                print("Error while adding subscription to post with caption \(post.caption)")
-                completion?(false, nil)
+                self.subscribeToNewComments(post: post) { (success, error) in
+                    if let error = error {
+                        print("Error in \(#function): \(error.localizedDescription) /n---/n \(error)")
+                        completion?(false, error)
+                        return
+                    }
+                    if success {
+                        print("Successfully subscribed to the post with captio \(post.caption)")
+                        completion?(true, nil)
+                    } else {
+                        print("Error while adding subscription to post with caption \(post.caption)")
+                        completion?(false, nil)
+                    }
+                }
             }
         }
     }

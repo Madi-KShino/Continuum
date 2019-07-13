@@ -36,7 +36,7 @@ class AddPostTableViewController: UITableViewController {
             let caption = captionTextView.text else { return }
         if captionTextView.text == "" {
             let alertController = UIAlertController(title: "No Caption", message: "This photo doesn't have a caption yet, are you sure you want to continue?", preferredStyle: .alert)
-            let addCaptionAction = UIAlertAction(title: "Go Back", style: .cancel, handler: nil)
+            let addCaptionAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let saveWithoutCaptionAction = UIAlertAction(title: "Continue", style: .default) { (_) in
                 PostController.sharedInstance.createPostWith(photo: photo, caption: caption) { (post) in }
                 self.postButton.isEnabled = false

@@ -14,7 +14,7 @@ class PostDetailTableViewController: UITableViewController {
     var postLandingPad: Post? {
         didSet {
             loadViewIfNeeded()
-            self.tableView.reloadData()
+            updateViews()
         }
     }
     

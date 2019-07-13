@@ -62,5 +62,5 @@ struct CommentConstants {
     static let commentTypeKey = "Comment"
     fileprivate static let textKey = "text"
     fileprivate static let timeStampKey = "timeStamp"
-     static let postReferenceKey = "post"
+    static let postReferenceKey = "post"
 }
